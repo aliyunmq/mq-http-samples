@@ -66,8 +66,6 @@ class ConsumerTest
                     $message->getPublishTime(), $message->getFirstConsumeTime(), $message->getConsumedTimes(), $message->getNextConsumeTime());
             }
 
-            $receiptHandles[] = "xxxx";
-
             // 5分钟之内若不确认消息消费成功，则消息会重复消费
             // 消息句柄有时间戳，同一条消息每次消费拿到的都不一样
             print_r($receiptHandles);
