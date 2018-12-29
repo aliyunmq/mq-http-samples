@@ -1,0 +1,18 @@
+{
+    "name": "aliyunmq/mq-http-php-sdk-sample",
+    "type": "library",
+    "description": "Aliyun Message Queue(MQ) Http PHP SDK Sample, PHP>=5.5.0",
+    "keywords": ["Aliyun","Alicloud", "MQ", "Message Queue", "Message", "Queue"],
+    "homepage": "https://github.com/aliyunmq/samples",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.5.0",
+        "aliyunmq/mq-http-php-sdk": "dev-master"
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
+    }
+}
