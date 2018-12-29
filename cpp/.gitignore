@@ -1,0 +1,13 @@
+.DS_STORE/
+build.sh
+*.o
+*.a
+include/
+lib/
+consumer
+producer
+run_consumer
+run_producer
+run_consumer.cpp
+run_producer.cpp
+replace.sh
