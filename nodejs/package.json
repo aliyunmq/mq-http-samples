@@ -1,0 +1,6 @@
+{
+    "name": "mq-http-sdk-sample",
+    "dependencies": {
+        "@aliyunmq/mq-http-sdk": "1.0.0"
+    }
+}

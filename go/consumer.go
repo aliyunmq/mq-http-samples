@@ -46,8 +46,9 @@ func main() {
 							v.FirstConsumeTime, v.NextConsumeTime, v.MessageBody)
 					}
 
-					// 5分钟之内若不确认消息消费成功，则消息会重复消费
-					ackerr := mqConsumer.AckMessage(handles)
+                    // NextConsumeTime前若不确认消息消费成功，则消息会重复消费
+                    // 消息句柄有时间戳，同一条消息每次消费拿到的都不一样
+                    ackerr := mqConsumer.AckMessage(handles)
 					if ackerr != nil {
 						// 某些消息的句柄可能超时了会导致确认不成功
 						fmt.Println(ackerr)

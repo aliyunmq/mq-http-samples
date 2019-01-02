@@ -64,7 +64,8 @@ int main() {
             }
 
             // 确认消息消费成功
-            // 5分钟之内若不确认消息消费成功，则消息会重复消费
+            // Message.NextConsumeTime前若不确认消息消费成功，则消息会重复消费
+            // 消息句柄有时间戳，同一条消息每次消费拿到的都不一样
             AckMessageResponse bdmResp;
             consumer->ackMessage(receiptHandles, bdmResp);
             if (!bdmResp.isSuccess()) {
