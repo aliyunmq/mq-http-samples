@@ -57,9 +57,12 @@ int main() {
                 cout << "MessageId: " << iter->getMessageId()
                     << " PublishTime: " << iter->getPublishTime()
                     << " Tag: " << iter->getMessageTag()
+                    << " Body: " << iter->getMessageBody()
                     << " FirstConsumeTime: " << iter->getFirstConsumeTime()
                     << " NextConsumeTime: " << iter->getNextConsumeTime()
-                    << " ConsumedTimes: " << iter->getConsumedTimes() << endl;
+                    << " ConsumedTimes: " << iter->getConsumedTimes() 
+                    << " Properties: " << iter->getPropertiesAsString() 
+                    << " Key: " << iter->getMessageKey() << endl;
                 receiptHandles.push_back(iter->getReceiptHandle());
             }
 
@@ -87,14 +90,14 @@ int main() {
                 continue;
             }
             cout << "Request Failed: " + me.GetErrorCode() + ".RequestId: " + me.GetRequestId() << endl;
-#ifdef WIN32
+#ifdef _WIN32
             Sleep(2000);
 #else
             usleep(2000 * 1000);
 #endif
         } catch (MQExceptionBase& mb) {
             cout << "Request Failed: " + mb.ToString() << endl;
-#ifdef WIN32
+#ifdef _WIN32
             Sleep(2000);
 #else
             usleep(2000 * 1000);

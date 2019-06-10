@@ -1,5 +1,6 @@
 const {
-  MQClient
+  MQClient,
+  MessageProperties
 } = require('@aliyunmq/mq-http-sdk');
 
 // 设置HTTP接入域名（此处以公共云生产环境为例）
@@ -20,12 +21,24 @@ const producer = client.getProducer(instanceId, topic);
 
 (async function(){
   try {
-    // 循环发送100条消息
-    for(var i = 0; i < 50; i++) {
+    // 循环发送4条消息
+    for(var i = 0; i < 4; i++) {
       let res;
-      res = await producer.publishMessage("hello mq.");
-      console.log("Publish message: MessageID:%s,BodyMD5:%s", res.body.MessageId, res.body.MessageBodyMD5);
-      res = await producer.publishMessage("hello mq.", "tag");
+      if (i % 2 == 0) {
+        msgProps = new MessageProperties();
+        // 设置属性
+        msgProps.putProperty("a", i);
+        // 设置KEY
+        msgProps.messageKey("MessageKey");
+        res = await producer.publishMessage("hello mq.", "", msgProps);
+      } else {
+        msgProps = new MessageProperties();
+        // 设置属性
+        msgProps.putProperty("a", i);
+        // 定时消息, 定时时间为10s后
+        msgProps.startDeliverTime(Date.now() + 10 * 1000);
+        res = await producer.publishMessage("hello mq. timer msg!", "TagA", msgProps);
+      }
       console.log("Publish message: MessageID:%s,BodyMD5:%s", res.body.MessageId, res.body.MessageBodyMD5);
     }
 

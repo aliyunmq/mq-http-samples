@@ -33,11 +33,19 @@ class ProducerTest
     {
         try
         {
-            for ($i=1; $i<=100; $i++)
+            for ($i=1; $i<=4; $i++)
             {
                 $publishMessage = new TopicMessage(
                     "xxxxxxxx"// 消息内容
                 );
+                // 设置属性
+                $publishMessage->putProperty("a", $i);
+                // 设置消息KEY
+                $publishMessage->setMessageKey("MessageKey");
+                if ($i % 2 == 0) {
+                    // 定时消息, 定时时间为10s后
+                    $publishMessage->setStartDeliverTime(time() * 1000 + 10 * 1000);
+                }
                 $result = $this->producer->publishMessage($publishMessage);
 
                 print "Send mq message success. msgId is:" . $result->getMessageId() . ", bodyMD5 is:" . $result->getMessageBodyMD5() . "\n";

@@ -3,4 +3,5 @@
 replace.sh
 run_consumer.go
 run_producer.go
+run_trans_producer.go
 src/

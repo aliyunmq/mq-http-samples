@@ -42,7 +42,8 @@ namespace Aliyun.MQ.Sample
                             3, // 一次最多消费3条(最多可设置为16条)
                             3 // 长轮询时间3秒（最多可设置为30秒）
                         );
-                    } catch (Exception exp1)
+                    }
+                    catch (Exception exp1)
                     {
                         if (exp1 is MessageNotExistException)
                         {
@@ -53,19 +54,18 @@ namespace Aliyun.MQ.Sample
                         Thread.Sleep(2000);
                     }
 
-                    if (messages == null) {
+                    if (messages == null)
+                    {
                         continue;
                     }
 
-                    List<String> handlers = new List<string>();
+                    List<string> handlers = new List<string>();
                     Console.WriteLine(Thread.CurrentThread.Name + " Receive Messages:");
                     // 处理业务逻辑
                     foreach (Message message in messages)
                     {
-                        Console.WriteLine("MessageId:" + message.Id + ", PublishTime:" + message.PublishTime + ", NextConsumeTime:" + message.NextConsumeTime 
-                                          + "\n ConsumedTimes:" + message.ConsumedTimes + ", MessageTag:" + message.MessageTag
-                                          + "\n BodyMD5:" + message.BodyMD5 + ", NextConsumeTime:" + message.NextConsumeTime 
-                                          + "\n Body:" + message.Body);
+                        Console.WriteLine(message);
+                        Console.WriteLine("Property a is:" + message.GetProperty("a"));
                         handlers.Add(message.ReceiptHandle);
                     }
                     // Message.nextConsumeTime前若不确认消息消费成功，则消息会重复消费
@@ -74,12 +74,13 @@ namespace Aliyun.MQ.Sample
                     {
                         consumer.AckMessage(handlers);
                         Console.WriteLine("Ack message success:");
-                        foreach(string handle in handlers)
+                        foreach (string handle in handlers)
                         {
                             Console.Write("\t" + handle);
                         }
                         Console.WriteLine();
-                    } catch (Exception exp2)
+                    }
+                    catch (Exception exp2)
                     {
                         // 某些消息的句柄可能超时了会导致确认不成功
                         if (exp2 is AckMessageException)

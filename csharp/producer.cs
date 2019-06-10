@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Aliyun.MQ.Model;
 using Aliyun.MQ.Model.Exp;
-using Aliyun.MQ;
+using Aliyun.MQ.Util;
 
 namespace Aliyun.MQ.Sample
 {
@@ -28,13 +28,28 @@ namespace Aliyun.MQ.Sample
         {
             try
             {
-                // 循环发送100条消息
-                for (int i = 0; i < 50; i++)
+                // 循环发送4条消息
+                for (int i = 0; i < 4; i++)
                 {
-                    TopicMessage result = producer.PublishMessage(new TopicMessage("dfadfadfadf"));
-                    Console.WriteLine("publis message success: MessageId:" + result.Id + ", BodyMD5:" + result.BodyMD5);
-                    result = producer.PublishMessage(new TopicMessage("dfadfadfadf", "tag"));
-                    Console.WriteLine("publis message success: MessageId:" + result.Id + ", BodyMD5:" + result.BodyMD5);
+                    TopicMessage sendMsg;
+                    if (i % 2 == 0)
+                    {
+                        sendMsg = new TopicMessage("dfadfadfadf");
+                        // 设置属性
+                        sendMsg.PutProperty("a", i.ToString());
+                        // 设置KEY
+                        sendMsg.MessageKey = "MessageKey";
+                    }
+                    else
+                    {
+                        sendMsg = new TopicMessage("dfadfadfadf", "tag");
+                        // 设置属性
+                        sendMsg.PutProperty("a", i.ToString());
+                        // 定时消息, 定时时间为10s后
+                        sendMsg.StartDeliverTime = AliyunSDKUtils.GetNowTimeStamp() + 10 * 1000;
+                    }
+                    TopicMessage result = producer.PublishMessage(sendMsg);
+                    Console.WriteLine("publis message success:" + result);
                 }
             }
             catch (Exception ex)

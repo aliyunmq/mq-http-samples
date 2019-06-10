@@ -61,9 +61,11 @@ class ConsumerTest
             $receiptHandles = array();
             foreach ($messages as $message) {
                 $receiptHandles[] = $message->getReceiptHandle();
-                printf("MessageID:%s TAG:%s BODY:%s \nPublishTime:%d, FirstConsumeTime:%d, \nConsumedTimes:%d, NextConsumeTime:%d\n",
+                printf("MessageID:%s TAG:%s BODY:%s \nPublishTime:%d, FirstConsumeTime:%d, \nConsumedTimes:%d, NextConsumeTime:%d,MessageKey:%s\n",
                     $message->getMessageId(), $message->getMessageTag(), $message->getMessageBody(),
-                    $message->getPublishTime(), $message->getFirstConsumeTime(), $message->getConsumedTimes(), $message->getNextConsumeTime());
+                    $message->getPublishTime(), $message->getFirstConsumeTime(), $message->getConsumedTimes(), $message->getNextConsumeTime(),
+                    $message->getMessageKey());
+                print_r($message->getProperties());
             }
 
             // $message->getNextConsumeTime()前若不确认消息消费成功，则消息会重复消费

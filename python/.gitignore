@@ -3,3 +3,5 @@
 replace.sh
 run_consumer.py
 run_producer.py
+run_trans_producer.py
+*.bak

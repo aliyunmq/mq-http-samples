@@ -41,9 +41,11 @@ func main() {
 					for _, v := range resp.Messages {
 						handles = append(handles, v.ReceiptHandle)
 						fmt.Printf("\tMessageID: %s, PublishTime: %d, MessageTag: %s\n"+
-							"\tConsumedTimes: %d, FirstConsumeTime: %d, NextConsumeTime: %d\n\tBody: %s\n",
+							"\tConsumedTimes: %d, FirstConsumeTime: %d, NextConsumeTime: %d\n"+
+                            "\tBody: %s\n"+
+                            "\tProps: %s\n",
 							v.MessageId, v.PublishTime, v.MessageTag, v.ConsumedTimes,
-							v.FirstConsumeTime, v.NextConsumeTime, v.MessageBody)
+							v.FirstConsumeTime, v.NextConsumeTime, v.MessageBody, v.Properties)
 					}
 
                     // NextConsumeTime前若不确认消息消费成功，则消息会重复消费

@@ -30,14 +30,33 @@ public class Producer {
         }
 
         try {
-            // 循环发送100条消息
-            for (int i = 0; i < 100; i++) {
-                TopicMessage pubMsg = new TopicMessage(
-                        // 消息内容
-                        "hello mq!".getBytes(),
-                        // 消息标签
-                        "A"
-                );
+            // 循环发送4条消息
+            for (int i = 0; i < 4; i++) {
+                TopicMessage pubMsg;
+                if (i % 2 == 0) {
+                    // 普通消息
+                    pubMsg = new TopicMessage(
+                            // 消息内容
+                            "hello mq!".getBytes(),
+                            // 消息标签
+                            "A"
+                    );
+                    // 设置属性
+                    pubMsg.getProperties().put("a", String.valueOf(i));
+                    // 设置KEY
+                    pubMsg.setMessageKey("MessageKey");
+                } else {
+                    pubMsg = new TopicMessage(
+                            // 消息内容
+                            "hello mq!".getBytes(),
+                            // 消息标签
+                            "A"
+                    );
+                    // 设置属性
+                    pubMsg.getProperties().put("a", String.valueOf(i));
+                    // 定时消息, 定时时间为10s后
+                    pubMsg.setStartDeliverTime(System.currentTimeMillis() + 10 * 1000);
+                }
                 // 同步发送消息，只要不抛异常就是成功
                 TopicMessage pubResultMsg = producer.publishMessage(pubMsg);
 

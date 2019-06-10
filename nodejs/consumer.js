@@ -35,9 +35,10 @@ const consumer = client.getConsumer(instanceId, topic, groupId);
         // 消费消息，处理业务逻辑
         console.log("Consume Messages, requestId:%s", res.requestId);
         const handles = res.body.map((message) => {
-          console.log("\tMessageId:%s,Tag:%s,PublishTime:%d,NextConsumeTime:%d,FirstConsumeTime:%d,ConsumedTimes:%d,Body:%s",
+          console.log("\tMessageId:%s,Tag:%s,PublishTime:%d,NextConsumeTime:%d,FirstConsumeTime:%d,ConsumedTimes:%d,Body:%s" + 
+            ",Props:%j,MessageKey:%s,Prop-A:%s",
               message.MessageId, message.MessageTag, message.PublishTime, message.NextConsumeTime, message.FirstConsumeTime, message.ConsumedTimes,
-              message.MessageBody);
+              message.MessageBody,message.Properties,message.MessageKey,message.Properties.a);
           return message.ReceiptHandle;
         });
 
