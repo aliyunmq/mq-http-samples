@@ -1,7 +1,5 @@
 .idea/
 *.iml
 replace.sh
-RunConsumer.java
-RunProducer.java
-RunTransProducer.java
+Run*
 target/

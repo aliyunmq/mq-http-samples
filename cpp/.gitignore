@@ -6,13 +6,5 @@ include
 include/
 lib
 lib/
-consumer
-producer
-trans_producer
-run_consumer
-run_producer
-run_trans_producer
-run_consumer.cpp
-run_producer.cpp
-run_trans_producer.cpp
+run_*
 replace.sh
