@@ -29,8 +29,8 @@ func main() {
 
 	for {
 		endChan := make(chan int)
-		respChan := make(chan mq_http_sdk.ConsumeMessageResponse)
-		errChan := make(chan error)
+		respChan := make(chan mq_http_sdk.ConsumeMessageResponse,1)
+		errChan := make(chan error,1)
 		go func() {
 			select {
 			case resp := <-respChan:
