@@ -75,7 +75,7 @@ class ConsumeHalfMessageThread(threading.Thread):
                            half_msg.publish_time, half_msg.message_body,
                            half_msg.next_consume_time, half_msg.receipt_handle, half_msg.properties))
 
-                a = int(half_msg.get_property("a"))
+                a = int(half_msg.get_property("xy"))
                 try:
                     if a == 1:
                         # 确认提交事务消息
