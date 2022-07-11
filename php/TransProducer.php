@@ -88,7 +88,7 @@ class ProducerTest
                         print "\n unknown transaction msg: " . $message->getMessageId() . "\n";
                     }
                 } catch (\Exception $e) {
-                    processAckError($e);
+                    $this->processAckError($e);
                 }
             }
         }
@@ -116,7 +116,7 @@ class ProducerTest
                     print "\n commit transaction msg when publish: " . $topicMessage->getMessageId() . "\n";
                 } catch (\Exception $e) {
                     // 如果Commit/Rollback时超过了TransCheckImmunityTime则会失败
-                    processAckError($e);
+                    $this->processAckError($e);
                 }
             }
         }
