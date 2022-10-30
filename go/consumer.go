@@ -86,7 +86,7 @@ func main() {
 
 		// 长轮询消费消息
 		// 长轮询表示如果topic没有消息则请求会在服务端挂住3s，3s内如果有消息可以消费则立即返回
-		mqConsumer.ConsumeMessage(respChan, errChan,
+		go mqConsumer.ConsumeMessage(respChan, errChan,
 			3, // 一次最多消费3条(最多可设置为16条)
 			3, // 长轮询时间3秒（最多可设置为30秒）
 		)
