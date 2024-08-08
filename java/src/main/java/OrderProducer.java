@@ -1,6 +1,7 @@
 import com.aliyun.mq.http.MQClient;
 import com.aliyun.mq.http.MQProducer;
 import com.aliyun.mq.http.model.TopicMessage;
+import src.main.java.ProducerSingleton.ProducerSingleton;
 
 import java.util.Date;
 
@@ -22,12 +23,7 @@ public class OrderProducer {
         final String instanceId = "${INSTANCE_ID}";
 
         // 获取Topic的生产者
-        MQProducer producer;
-        if (instanceId != null && instanceId != "") {
-            producer = mqClient.getProducer(instanceId, topic);
-        } else {
-            producer = mqClient.getProducer(topic);
-        }
+        MQProducer producer = ProducerSingleton.getOneProducer(mqClient, instanceId, topic);
 
         try {
             // 循环发送8条消息

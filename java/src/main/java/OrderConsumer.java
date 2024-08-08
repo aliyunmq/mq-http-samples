@@ -2,6 +2,7 @@ import com.aliyun.mq.http.MQClient;
 import com.aliyun.mq.http.MQConsumer;
 import com.aliyun.mq.http.common.AckMessageException;
 import com.aliyun.mq.http.model.Message;
+import src.main.java.ConsumerSingleton.ConsumerSingleton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +26,7 @@ public class OrderConsumer {
         // Topic所属实例ID，默认实例为空
         final String instanceId = "${INSTANCE_ID}";
 
-        final MQConsumer consumer;
-        if (instanceId != null && instanceId != "") {
-            consumer = mqClient.getConsumer(instanceId, topic, groupId, null);
-        } else {
-            consumer = mqClient.getConsumer(topic, groupId);
-        }
+        final MQConsumer consumer = ConsumerSingleton.getOneConsumer(mqClient, instanceId, topic, groupId, null);
 
         // 在当前线程循环消费消息，建议是多开个几个线程并发消费消息
         do {

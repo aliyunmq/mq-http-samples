@@ -3,6 +3,7 @@ import com.aliyun.mq.http.MQTransProducer;
 import com.aliyun.mq.http.common.AckMessageException;
 import com.aliyun.mq.http.model.Message;
 import com.aliyun.mq.http.model.TopicMessage;
+import src.main.java.ProducerSingleton.TransProducerSingleton;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class TransProducer {
             if (errors.getErrorMessages() != null) {
                 for (String errorHandle :errors.getErrorMessages().keySet()) {
                     System.out.println("Handle:" + errorHandle + ", ErrorCode:" + errors.getErrorMessages().get(errorHandle).getErrorCode()
-                            + ", ErrorMsg:" + errors.getErrorMessages().get(errorHandle).getErrorMessage());
+                        + ", ErrorMsg:" + errors.getErrorMessages().get(errorHandle).getErrorMessage());
                 }
             }
         }
@@ -39,7 +40,7 @@ public class TransProducer {
         // 您在控制台创建的 Consumer ID(Group ID)
         final String groupId = "${GROUP_ID}";
 
-        final MQTransProducer mqTransProducer = mqClient.getTransProducer(instanceId, topic, groupId);
+        final MQTransProducer mqTransProducer = TransProducerSingleton.getOneProducer(mqClient, instanceId, topic, groupId);
 
         for (int i = 0; i < 4; i++) {
             TopicMessage topicMessage = new TopicMessage();
